@@ -7,6 +7,9 @@ import {
 import "./styles.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Pane } from "tweakpane";
+
+
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.defaults({ scroller: ".mainContainer" });
@@ -17,6 +20,13 @@ async function setupViewer() {
     useRgbm: false,
     isAntialiased: true,
   });
+
+     const data = {
+    position: { x: 0, y: 0, z: 0 },
+     rotation: { x: 0, y: 0, z: 0 },
+   };
+
+  const pane = new Pane();
 
   viewer.renderer.displayCanvasScaling = Math.min(window.devicePixelRatio, 1);
 
@@ -57,14 +67,37 @@ async function setupViewer() {
     });
   }
 
+   pane.addInput(data, "position", {
+     x: { step: 0.01 },
+     y: { step: 0.01 },
+     z: { step: 0.01 },
+   });
+  pane.addInput(data, "rotation", {
+     x: { min: -6.28319, max: 6.28319, step: 0.001 },
+     y: { min: -6.28319, max: 6.28319, step: 0.001 },
+     z: { min: -6.28319, max: 6.28319, step: 0.001 },
+   });
+
+   pane.on("change", (e) => {
+     if (e.presetKey === "rotation") {
+       const { x, y, z } = e.value;
+       modelRotation.set(x, y, z);
+     } else {
+       const { x, y, z } = e.value;
+       modelPosition.set(x, y, z);
+     }
+
+   onUpdate();
+   });
+
   function setupScrollAnimation() {
     document.body.removeChild(loaderElement);
 
     const tl = gsap.timeline();
 
     tl.to(modelPosition, {
-      x: -0.9,
-      y: -0.43,
+      x: 0,
+      y: 0,
       z: 0,
       scrollTrigger: {
         trigger: ".first",
@@ -77,8 +110,8 @@ async function setupViewer() {
     })
 
       .to(modelPosition, {
-        x: -1.36,
-        y: -0.02,
+        x: 3.5,
+        y: -1.07,
         z: -0.22,
         scrollTrigger: {
           trigger: ".second",
@@ -91,9 +124,9 @@ async function setupViewer() {
       })
 
       .to(modelRotation, {
-        x: 0.0,
+        x: 0,
         y: 0,
-        z: -1.57,
+        z: -1.65,
         scrollTrigger: {
           trigger: ".second",
           start: "top bottom",
@@ -104,9 +137,9 @@ async function setupViewer() {
       })
 
       .to(modelPosition, {
-        x: 0.38,
-        y: -0.11,
-        z: -1.06,
+        x: 2.38,
+        y: 1,
+        z: -3.24,
         scrollTrigger: {
           trigger: ".third",
           start: "top bottom",
@@ -118,9 +151,9 @@ async function setupViewer() {
       })
 
       .to(modelRotation, {
-        x: 0.403,
-        y: 0.957,
-        z: -0.421,
+        x: 0.118,
+        y: 0.929,
+        z: 0,
         scrollTrigger: {
           trigger: ".third",
           start: "top bottom",
@@ -131,9 +164,9 @@ async function setupViewer() {
       })
 
       .to(modelPosition, {
-        x: 0.92,
-        y: -0.31,
-        z: 0.66,
+        x: 1.57,
+        y: 1,
+        z: 1,
         scrollTrigger: {
           trigger: ".fourth",
           start: "top bottom",
@@ -146,7 +179,7 @@ async function setupViewer() {
 
       .to(modelRotation, {
         x: 0.0,
-        y: 1.641,
+        y: 1.8,
         z: 0,
         scrollTrigger: {
           trigger: ".fourth",
@@ -157,9 +190,9 @@ async function setupViewer() {
         },
       })
       .to(modelPosition, {
-        x: -0.1,
-        y: -0.11,
-        z: 0.99,
+        x: 2,
+        y: 1.7,
+        z: 1.76,
         scrollTrigger: {
           trigger: ".fifth",
           start: "top bottom",
@@ -170,9 +203,9 @@ async function setupViewer() {
         onUpdate,
       })
       .to(modelRotation, {
-        x: -0.785,
-        y: 2.329,
-        z: 0.903,
+        x: -0.4,
+        y: 2.411,
+        z: 0.901,
         scrollTrigger: {
           trigger: ".fifth",
           start: "top bottom",
@@ -183,9 +216,9 @@ async function setupViewer() {
       })
 
       .to(modelPosition, {
-        x: 0.16,
-        y: -0.3,
-        z: -0.56,
+        x: 1,
+        y: 0.31,
+        z: -1.32,
         scrollTrigger: {
           trigger: ".sixth",
           start: "top bottom",
@@ -197,9 +230,9 @@ async function setupViewer() {
       })
 
       .to(modelRotation, {
-        x: -0.261,
-        y: 4.911,
-        z: -0.277,
+        x: 0.002,
+        y: -1.213,
+        z: -0.004,
         scrollTrigger: {
           trigger: ".sixth",
           start: "top bottom",
