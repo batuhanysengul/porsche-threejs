@@ -1,0 +1,100 @@
+:root {
+    --black: #131316;
+    --lightgrey: #6a6b70;
+    --grey: #393a41;
+    --oak:  #2e3d35;
+}
+
+@font-face {
+  font-family: 'Monument Extended';
+  src: url('./fonts/PPMonumentExtended-Black.otf');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Monument Extended';
+  src: url('./fonts/PPMonumentExtended-Regular.otf');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Monument Extended';
+  src: url('./fonts/PPMonumentExtended-Light.otf');
+  font-weight: 300;
+}
+
+body {
+  font-family: 'Monument Extended';
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--oak);
+}
+
+::webkit-scrollbar {
+  width: 3px;
+}
+
+::webkit-scrollbar-thumb {
+  background-color: var(--oak);
+  border-radius: 2px;
+}
+
+.loader {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: var(--black);
+  gap: 2em;
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+}
+
+.progress {
+  position: absolute;
+  top: 60%;
+  width: 50%;
+  height: 2px;
+  background: var(--oak);
+  margin: 0 5%;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1s;
+}
+
+main {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100vh;
+  scroll-snap-type: y mandatory;
+  scroll-snap-points-y: repeat(100vh);
+}
+
+section {
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: center;
+  font-size: 42px;
+}
+
+#webgi-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+#webgi-canvas-container{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  pointer-events: none;
+  z-index: -1;
+}
