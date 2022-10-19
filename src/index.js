@@ -105,20 +105,20 @@ async function setupViewer() {
    //  z: { min: -6.28319, max: 6.28319, step: 0.001 },
    // });
 
-   pane.on("change", (e) => {
-     if (e.presetKey === "rotation") {
-       const { x, y, z } = e.value;
-       modelRotation.set(x, y, z);
-     } else {
-       const { x, y, z } = e.value;
-       modelPosition.set(x, y, z);
-     }
+   //pane.on("change", (e) => {
+    // if (e.presetKey === "rotation") {
+     //  const { x, y, z } = e.value;
+     //  modelRotation.set(x, y, z);
+     // } else {
+     //  const { x, y, z } = e.value;
+     //  modelPosition.set(x, y, z);
+    // }
 
-   onUpdate();
-   });
+    // onUpdate();
+    // });
 
   function setupScrollAnimation() {
-    document.body.removeChild(loaderElement);
+    document.body.removeAttribute(loaderElement);
 
     const tl = gsap.timeline();
 
