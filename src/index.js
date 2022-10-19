@@ -7,9 +7,7 @@ import {
 import "./styles.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Pane } from "tweakpane";
-
-
+//import { Pane } from "tweakpane";
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.defaults({ scroller: ".mainContainer" });
@@ -21,16 +19,18 @@ async function setupViewer() {
     isAntialiased: true,
   });
 
-     const data = {
-    position: { x: 0, y: 0, z: 0 },
-     rotation: { x: 0, y: 0, z: 0 },
-   };
+ //    const data = {
+ //   position: { x: 0, y: 0, z: 0 },
+ //    rotation: { x: 0, y: 0, z: 0 },
+ //  };
 
-  const pane = new Pane();
+  // const pane = new Pane();
 
   viewer.renderer.displayCanvasScaling = Math.min(window.devicePixelRatio, 1);
 
   const manager = await viewer.addPlugin(AssetManagerPlugin);
+  const camera = viewer.scene.activeCamera;
+  
 
   await addBasePlugins(viewer);
 
@@ -59,24 +59,51 @@ async function setupViewer() {
   function introAnimation() {
     const t1 = gsap.timeline()
     t1.to(".loader", {
-      x: "150%",
+      y: "-150%",
       duration: 0.8,
       ease: "power4.inOut",
       delay: 1,
       onComplete: setupScrollAnimation,
-    });
+    })
+
+    .fromTo(
+      ".header-container",
+      { opacity: 0, y: "-100%" },
+      { opacity: 1, y: "0%", ease: "power1.inOut", duration: 0.8 },
+      "-=1"
+    )
+    .fromTo(
+      ".hero-scroller",
+      { opacity: 0, y: "150%" },
+      { opacity: 1, y: "0%", ease: "power4.inOut", duration: 1 },
+      "-=1"
+    )
+    .fromTo(
+      ".hero-content",
+      { opacity: 0, x: "-50%" },
+      {
+        opacity: 1,
+        x: "0%",
+        ease: "power4.inOut",
+        duration: 1.8,
+        onComplete: setupScrollAnimation,
+      },
+      "-=1"
+    );
+    
+    ;
   }
 
-   pane.addInput(data, "position", {
-     x: { step: 0.01 },
-     y: { step: 0.01 },
-     z: { step: 0.01 },
-   });
-  pane.addInput(data, "rotation", {
-     x: { min: -6.28319, max: 6.28319, step: 0.001 },
-     y: { min: -6.28319, max: 6.28319, step: 0.001 },
-     z: { min: -6.28319, max: 6.28319, step: 0.001 },
-   });
+   //pane.addInput(data, "position", {
+   //  x: { step: 0.01 },
+   //  y: { step: 0.01 },
+   //  z: { step: 0.01 },
+   // });
+  // pane.addInput(data, "rotation", {
+   //  x: { min: -6.28319, max: 6.28319, step: 0.001 },
+   //  y: { min: -6.28319, max: 6.28319, step: 0.001 },
+   //  z: { min: -6.28319, max: 6.28319, step: 0.001 },
+   // });
 
    pane.on("change", (e) => {
      if (e.presetKey === "rotation") {
@@ -241,7 +268,81 @@ async function setupViewer() {
           immediateRender: false,
         },
       })
-        
+      .to(".section-one-container1", {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: ".section-one-container1",
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+          immediateRender: false,
+        },
+      })
+      .to(".section-one-container2", {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: ".second",
+          start: "top bottom",
+          end: "top center",
+          scrub: true,
+          immediateRender: false,
+        },
+      })
+      .to(".section-two-container1", {
+        scrollTrigger: {
+          trigger: ".section-two-container1",
+          start: "top 80%",
+          end: "bottom center",
+          toggleClass: "activeRightSpecific",
+          scrub: true,
+        },
+      })
+      .to(".section-two-container2", {
+        scrollTrigger: {
+          trigger: ".section-two-container2",
+          start: "top 80%",
+          end: "bottom center",
+          toggleClass: "resetPosition",
+          scrub: true,
+        },
+      })
+      .to(".section-three-container", {
+        scrollTrigger: {
+          trigger: ".section-three-container",
+          start: "top 80%",
+          end: "bottom center",
+          toggleClass: "resetPosition",
+          scrub: true,
+        },
+      })
+      .to(".section-four-container", {
+        scrollTrigger: {
+          trigger: ".section-four-container",
+          start: "top 80%",
+          end: "bottom center",
+          toggleClass: "resetPosition",
+          scrub: true,
+        },
+      })
+      .to(".section-five-container ", {
+        scrollTrigger: {
+          trigger: ".section-five-container ",
+          start: "top 80%",
+          end: "bottom center",
+          toggleClass: "resetPosition",
+          scrub: true,
+        },
+      })
+      .to(".section-six-container ", {
+        scrollTrigger: {
+          trigger: ".section-six-container ",
+          start: "top 80%",
+          end: "bottom center",
+          toggleClass: "resetPosition",
+          scrub: true,
+        },
+
+      })
   }
 
   function onUpdate() {
